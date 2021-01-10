@@ -22,7 +22,7 @@ uint8_t hue = 0;
 uint8_t hue_delta = 12; 
 uint8_t saturation = 128;
 uint8_t saturation_delta = 1;
-uint8_t brightness = 5;
+uint8_t brightness = 40;
 uint8_t start_hue_val = 0; 
 uint8_t end_hue_val_delta = 255; 
 
@@ -33,12 +33,10 @@ uint8_t running_hue = 0;
  
 void loop() {
 
-
       FastLED.show(); 
-      //hue = random8(); 
 
       EVERY_N_MILLISECONDS(100){
-        if (brightness > 100) {
+        if ((brightness > 100) && ( bright_direction ==1)) {
           start_hue_val++;
           // addGlitter(5);
         }
@@ -47,21 +45,21 @@ void loop() {
       }
 
       
-     EVERY_N_MILLISECONDS( 10 ){
+     //EVERY_N_MILLISECONDS( 10 ){
 
          // fill_rainbow (leds, NUM_LEDS, hue, 5);
           start_hue = CHSV( start_hue_val, saturation, brightness); 
           //end_hue = CHSV(start_hue_val + (sin8(end_hue_val_delta)/4), saturation, brightness);
-          end_hue = CHSV(start_hue_val + 20 + (sin8(end_hue_val_delta)/10), saturation, brightness);
-          fill_gradient (leds, NUM_LEDS, start_hue, end_hue,LONGEST_HUES);
+          end_hue = CHSV(start_hue_val + 5 + (sin8(end_hue_val_delta)/20), saturation, brightness);
+          fill_gradient (leds, NUM_LEDS, start_hue, end_hue,SHORTEST_HUES);
           end_hue_val_delta++; 
 
-     }
+   //  }
       
  
       EVERY_N_MILLISECONDS( 40 ) {
         
-        //if (brightness > 100)
+        if (brightness > 100)
         {
           saturation = saturation + saturation_delta; 
           if (saturation > 250) saturation_delta = -1; 
@@ -70,7 +68,7 @@ void loop() {
         
         brightness = brightness + bright_direction; 
         if (brightness > 180) bright_direction = -1; 
-        if (brightness <40) bright_direction = 1; 
+        if (brightness < 40) bright_direction = 1; 
       }
 }
 
